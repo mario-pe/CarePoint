@@ -1,0 +1,17 @@
+{% extends 'care_point/base.html' %}
+
+{% block body %}
+
+    <div class="col-ms-12 col-md-6">
+        <div class="container-fluid">
+             <div class="details-container">
+                {% if point %}
+                    {{ point.id }} {{ point.city }}
+                {% else %}
+                    <h2>Nie ma oddziału do wyswietlenia</h2>
+                {% endif %}
+             </div>
+        </div>
+    </div>
+
+{% endblock %}

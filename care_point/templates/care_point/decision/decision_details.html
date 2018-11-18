@@ -1,0 +1,47 @@
+{% extends 'care_point/base.html' %}
+
+{% block body %}
+    <div class="col-ms-12 col-md-6">
+        <div class="container-fluid" style="padding: 1%">
+            <div class="details-container">
+                <div class="row">
+                    <h3>Decyzja nr decyzji {{ decision.pk }}</h3>
+
+                    {% if decision %}
+                         <a href="{% url 'care_point:decision_update' decision.pk %}"><button class="btn btn-primary btn-md">Edycja</button></a>
+                        <p> Dopłata: {{ decision.percent_payment }} %</p>
+                        <p>Godziny: {{ decision.hours }}</p>
+                        <p>Stawka: {{ decision.charge }}</p>
+                    </div>
+                    <div class="row">
+                        <h3>Podopiwczny</h3>
+                        <p>{{ decision.ward }}</p>
+                    </div>
+                    {% else %}
+                        <h2>Brak decyzji</h2>
+                    {% endif %}
+                <div class="row">
+                    <h3>Choroby</h3>
+                    {%  if illness %}
+                        {% for i in illness %}
+                            <p>{{ i.name }}, {{ i.description }}</p>
+                        {% endfor %}
+                    {% else %}
+                        <p>Brak zachorowań</p>
+                    {% endif %}
+                </div>
+                <div class="row">
+                    <h3>Aktywności</h3>
+                    {% if activity  and decision %}
+                        {% for a in activity %}
+                            <p>{{ a.name }}, {{ a.description }}</p>
+                        {% endfor %}
+                    {% else %}
+                        <p>Brak aktywnosci</p>
+                    {% endif %}
+                </div>
+            <a href="{% url 'care_point:decision_update' decision.pk %}"><button class="btn btn-primary btn-md">Edycja</button></a>
+             </div>
+        </div>
+    </div>
+{% endblock %}

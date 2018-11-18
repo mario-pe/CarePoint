@@ -1,0 +1,34 @@
+{% extends 'care_point/base.html' %}
+
+{%  block body %}
+    {% if decision %}
+        <div class="cols-sm-12 col-md-6">
+            <div class="container-fluid">
+                <table class="table table-hover">
+                     <thead>
+                        <tr>
+                            <th>Decyzje</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        {% for d in  decision %}
+                                <tr>
+                                    <td>
+                                        <div class="object_display">
+                                            <a href="{% url 'care_point:decision_details' d.id %}">{{ d.pk }} {{ d }} </a>
+                                            <a href="{% url 'care_point:decision_update' d.id %}"><button type="button"><span class="glyphicon glyphicon-edit"></span></button></a>
+                                            <a href="{% url 'care_point:decision_delete' d.id %}"><button type="button"><span class="glyphicon glyphicon-trash"></span></button></a>
+                                        </div>
+                                    </td>
+                                </tr>
+                        {% endfor %}
+                     </tbody>
+                </table>
+            </div>
+        </div>
+
+
+    {% else %}
+        <h3>Nie ma decyzji do wyswietlenia </h3>
+    {% endif %}
+{% endblock %}

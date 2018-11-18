@@ -1,0 +1,55 @@
+{% extends 'care_point/base.html' %}
+
+{% block body %}
+
+    <div class="row">
+        <div class="col-sm-12 col-md-7">
+            <div class="panel panel-default">
+                <form class="form-horizontal"  action="" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {% include 'care_point/form_template.html' %}
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                             <button type="submit" class="btn btn-success btn-sm">
+                                 <span class="glyphicon glyphicon-plus"></span>Zapisz
+                             </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    {% if addresses %}
+            <div class="col-sm-12 col-md-12">
+                <div class="conteiner-fluid">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Dane adresowe</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for a in addresses %}
+                                <tr>
+                                    <td>
+                                        <div class="object_display">
+                                            <li>
+                                                <a href="{% url 'care_point:address_details' a.id %}"> {{ a }} </a>
+                                                <a href="{% url 'care_point:address_update' a.id %}"><button type="button"><span class="glyphicon glyphicon-edit"></span></button></a>
+                                                <a href="{% url 'care_point:address_delete' a.id %}"><button type="button"><span class="glyphicon glyphicon-trash"></span></button></a>
+                                            </li>
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        {% else %}
+            <div class="row">
+                <h3>Nie ma adresów do wyswietlenia </h3>
+            </div>
+        {% endif %}
+
+{% endblock %}

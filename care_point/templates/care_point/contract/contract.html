@@ -1,0 +1,35 @@
+{% extends 'care_point/base.html' %}
+
+{%  block body %}
+    {% if contracts %}
+
+        <div class="cols-sm-12 col-md-6">
+            <div class="container-fluid">
+                <table class="table table-hover">
+                     <thead>
+                        <tr>
+                            <th>Umowy</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        {% for contract in  contracts %}
+                                <tr>
+                                    <td>
+                                        <div class="object_display">
+                                            <a href="{% url 'care_point:contract_details' contract.id %}"> {{ contract.caregiver.name }} {{ contract.caregiver.sname }}, {{ contract.genre }}, {{ contract.date_from }} - {{ contract.date_to }}</a>
+                                            <a href="{% url 'care_point:contract_update' contract.id %}"><button type="button"><span class="glyphicon glyphicon-edit"></span></button></a>
+                                            <a href="{% url 'care_point:contract_delete' contract.id %}"><button type="button"><span class="glyphicon glyphicon-trash"></span></button></a>
+                                        </div>
+                                    </td>
+                                </tr>
+                        {% endfor %}
+                     </tbody>
+                </table>
+            </div>
+        </div>
+
+
+    {% else %}
+        <h3>Nie ma umow do wyswietlenia </h3>
+    {% endif %}
+{% endblock %}

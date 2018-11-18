@@ -1,0 +1,132 @@
+{% extends 'care_point/base.html' %}
+
+{% block body %}
+
+    <div class="col-ms-12 col-md-8" xmlns="http://www.w3.org/1999/html">
+        <div class="container-fluid">
+             <nav class="navbar navbar-default" style="background-color: #CCCCCC">
+                <div class="conteiner-fluid" >
+                    <div>
+                        {% if ward %}
+                            <h2 style="padding: 1%">Dane podopiecznego</h2>
+                            <div style="padding: 1%">
+                                <p style="font-size: large" >{{ ward.name }} {{ ward.sname }}</p>
+                            </div>
+                        {% else %}
+                            <p>Brak dnaych podopieczneg</p>
+                         {% endif %}
+                        {% if address %}
+                            <h4 style="padding: 1%">Dane adresowe</h4>
+                            {% for a in address %}
+                                <p style="padding: 1%">{{ a }}</p>
+                            {% endfor %}
+                        {% else %}
+                            <p>Brak adresu podopiecznego</p>
+                        {% endif %}
+                    </div>
+                </div>
+             </nav>
+        <table>
+            <tbody>
+                <tr>
+                    <div class="col-sm-12 col-md-12">
+                            <div class="conteiner-fluid">
+                                <h4>Choroby</h4>
+                                {% for i in illness %}
+                                    <a href="{% url 'care_point:illness_details' i.id %}" > <button class="btn btn-info btn-md">{{ i.name }}</button></a>
+                                {% endfor %}
+                            </div>
+                    </div>
+                </tr>
+                <tr>
+                    <div class="col-sm-12 col-md-12">
+                        <div class="conteiner-fluid">
+                         <h4>Aktywnosci</h4>
+                            {% for i in activity %}
+                                <a href="{% url 'care_point:activity_details' i.id %}" > <button class="btn btn-info btn-md">{{ i.name }}</button></a>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </tr>
+            </tbody>
+        </table>
+
+            {% if decision %}
+                <div class="col-sm-12 col-md-12">
+                    <div class="conteiner-fluid">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Decyzje</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for d in decision %}
+                                    <tr>
+                                        <td>
+                                            <div class="object_display">
+                                                <li>
+                                                    <a href="{% url 'care_point:decision_details' d.id %}"> {{ d }} </a>
+                                                    <a href="{% url 'care_point:decision_update' d.id %}"><button type="button"><span class="glyphicon glyphicon-edit"></span></button></a>
+                                                    <a href="{% url 'care_point:decision_delete' d.id %}"><button type="button"><span class="glyphicon glyphicon-trash"></span></button></a>
+                                                </li>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            {% else %}
+                <div class="row">
+                    <h3>Nie ma decyzji do wyswietlenia </h3>
+                </div>
+            {% endif %}
+
+           {% if worksheet %}
+                <div class="col-sm-12 col-md-12">
+                    <div class="conteiner-fluid">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Karty pracy</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for w in worksheet %}
+                                    <tr>
+                                        <td>
+                                            <div class="object_display">
+                                                <li>
+                                                    <a href="{% url 'care_point:worksheet_details' w.id %}"> {{ w }} </a>
+                                                    <a href="{% url 'care_point:worksheet_update' w.id %}"><button type="button"><span class="glyphicon glyphicon-edit"></span></button></a>
+                                                    <a href="{% url 'care_point:worksheet_delete' w.id %}"><button type="button"><span class="glyphicon glyphicon-trash"></span></button></a>
+                                                </li>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            {% else %}
+                <h3>Nie ma kart pracy do wyswietlenia </h3>
+            {% endif %}
+
+
+             </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="container-fulid">
+            {% if ward %}
+                 <a href="{% url 'care_point:next_decision' ward.id %}" > <button class="btn btn-primary btn-md">Dodaj decyzje</button> </a>
+                 <a href="{% url 'care_point:new_worksheet_ward' ward.id %}" > <button class="btn btn-primary btn-md">Dodaj karte pracy</button> </a>
+             {% endif %}
+        </div>
+    </div>
+
+{% endblock %}

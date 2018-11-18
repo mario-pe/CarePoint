@@ -1,0 +1,34 @@
+{% extends 'care_point/base.html' %}
+
+{%  block body %}
+    {% if caregivers %}
+        <div class="col-sm-12 col-md-8">
+            <div class="conteiner-fluid">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Opiekunowie</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for c in caregivers %}
+                            <tr>
+                                <td>
+                                    <div class="object_display">
+                                        <li>
+                                            <a href="{% url 'care_point:caregiver_details' c.id %}"> {{ c.name }} {{ c.sname }}</a>
+                                            <a href="{% url 'care_point:caregiver_update' c.id %}"><button type="button"><span class="glyphicon glyphicon-edit"></span></button></a>
+                                            <a href="{% url 'care_point:caregiver_delete' c.id %}"><button type="button"><span class="glyphicon glyphicon-trash"></span></button></a>
+                                        </li>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    {% else %}
+        <h3>Nie ma opiekunow do wyswietlenia </h3>
+    {% endif %}
+{% endblock %}

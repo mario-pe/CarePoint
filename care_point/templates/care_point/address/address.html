@@ -1,0 +1,40 @@
+{% extends 'care_point/base.html' %}
+
+{%  block body %}
+    <div class="col-sm-6 col-md-2">
+        <div class="conteiner-fluid">
+            <a href="{%  url 'care_point:address_add' %}"><button class="btn btn-primary btn-md">Dodaj nowy</button> </a>
+        </div>
+    </div>
+
+    {% if address %}
+        <div class="cols-sm-12 col-md-6">
+            <div class="container-fluid">
+                <table class="table table-hover">
+                     <thead>
+                        <tr>
+                            <th>Adresy</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        {% for a in  address %}
+                                <tr>
+                                    <td>
+                                        <div class="object_display">
+                                            <a href="{% url 'care_point:address_details' a.id %}"> {{ a }}</a>
+                                            <a href="{% url 'care_point:address_update' a.id %}"><button type="button"><span class="glyphicon glyphicon-edit"></span></button></a>
+                                            <a href="{% url 'care_point:address_delete' a.id %}"><button type="button"><span class="glyphicon glyphicon-trash"></span></button></a>
+                                        </div>
+                                    </td>
+                                </tr>
+                        {% endfor %}
+                     </tbody>
+                </table>
+            </div>
+        </div>
+
+
+    {% else %}
+        <h3>Nie ma adresow do wyswietlenia </h3>
+    {% endif %}
+{% endblock %}

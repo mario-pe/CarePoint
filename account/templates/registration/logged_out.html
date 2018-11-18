@@ -1,0 +1,22 @@
+{% extends 'care_point/base.html' %}
+
+{% block body %}
+
+    {% if info %}
+        <div class="container">
+            <div class="alert alert-danger">
+                {{ info }}
+            </div>
+        </div>
+    {% endif  %}
+
+    <div class="row">
+        <div class="col-md-offset-1 col-sm-12 col-md-7">
+            <div class="panel panel-default">
+                <h3>Wylogowano</h3>
+                <a href=""{% url "account:login" %}> zaloguj sieaaaaaaaaaaa </a>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

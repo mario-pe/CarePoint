@@ -1,0 +1,21 @@
+{% extends 'care_point/base.html' %}
+
+{% block body %}
+
+        <div class="col-ms-12 col-md-6">
+            <div class="container-fluid">
+                 <div class="details-container">
+                    {% if contract %}
+                        {{ contract.id }}
+                        {{ contract.date_from }}
+                        {{ contract.date_to }}
+                        {{ contract.caregiver }}
+                    {% else %}
+                        <h2>No contract to display</h2>
+                    {% endif %}
+                 </div>
+            </div>
+        </div>
+
+
+{% endblock %}

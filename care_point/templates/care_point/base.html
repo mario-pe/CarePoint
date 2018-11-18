@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load staticfiles %}
+    <meta charset="UTF-8">
+    <title>{%  block title %}PCK Punkt Pomocy{% endblock %}</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link href='https://fonts.googleapis.com/css?family=Satisfy' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{% static '/../static/care_point/style.css' %}"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+     <nav class="navbar navbar-default">
+        <div class="conteiner-fluid">
+
+             <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#topNavBar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <div class="nav-bar-logo">
+                    <a href={% url 'care_point:index'%} class="navbar-brand"> <span class="glyphicon glyphicon-plus"></span> Polski Czerwony Krzyz </a>
+                </div>
+            </div>
+            <div class="collapse navbar-collapse"  id="topNavBar">
+                <ul class="nav navbar-nav">
+                    <li class="dropdown">
+                        <a href="{% url 'care_point:caregiver' %}" class="dropdown-toggle" data-toggle="dropdown"> Opiekunowie <span class="caret"></span> </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="{% url 'care_point:caregiver' %}">Pokaz wszystkie</a></li>
+                            <li><a href="{% url 'care_point:caregiver_add' %}">Dodaj</a></li>
+                            <li class=""><a href="{% url 'care_point:contract' %}">Umowy</a> </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="{% url 'care_point:ward' %}" class="dropdown-togle" data-toggle="dropdown"> Podopieczni <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="{% url 'care_point:ward' %}">Pokaz wszystkie</a></li>
+                            <li><a href="{% url 'care_point:ward_add' %}">Dodaj</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="{% url 'care_point:decision' %}" class="dropdown-togle" data-toggle="dropdown"> Decyzje <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="{% url 'care_point:decision' %}">Pokaz wszystkie</a></li>
+                            <li><a href="{% url 'care_point:decision_add' %}">Dodaj</a></li>
+                        </ul>
+                    </li>
+                     <li class="dropdown">
+                        <a href="{% url 'care_point:worksheet' %}" class="dropdown-togle" data-toggle="dropdown"> Karty pracy <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="{% url 'care_point:worksheet' %}">Pokaz wszystkie</a></li>
+                            <li><a href="{% url 'care_point:worksheet_add' %}">Dodaj</a></li>
+                        </ul>
+                    </li>
+                     <li class="dropdown">
+                        <a href="#" class="dropdown-togle" data-toggle="dropdown"> Inne <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="{% url 'care_point:illness' %}">Schorzenia</a></li>
+                            <li><a href="{% url 'care_point:activity' %}">Aktywnosci</a></li>
+                            <li><a href="{% url 'care_point:address' %}">Adresy</a></li>
+                            <li><a href="{% url 'care_point:points' %}">Oddziały</a></li>
+                            <li><a href="{% url 'care_point:managers' %}">Menadżer</a></li>
+                        </ul>
+                    </li>
+
+
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                        <a href="{% url 'account:logout' %}"  class="btn btn-info" role="button">Logout</a>
+
+                </ul>
+            </div>
+        </div>
+     </nav>
+<div class="modal fade" id="popUpWindow">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times</button>
+                 <h2 class="model-title"> Log In</h2>
+            </div>
+            <div class="modal-body">
+                <form role="form">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Login">
+                    </div>
+                    <div class="form-group">
+                        <input type="password" class="form-control" placeholder="Password">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary btn-block">Log In</button>
+            </div>
+        </div>
+    </div>
+</div>
+     <p>{{ ward_illness_for_decision }}</p>
+{%  block body %}
+{% endblock %}
+<script>
+    $(document).ready(function(){
+        {% block jquery %}
+
+
+            {% if ward_illness_for_decision %}
+
+                $("input[name='illness']").each(
+                    function() {
+                        {% for i in ward_illness_for_decision %}
+                            if(this.getAttribute('value') == {{ i }}) {
+                                this.checked= true;
+                            }
+                        {% endfor %}
+                    });
+            {% endif %}
+            {% if ward_activity_for_decision %}
+                $("input[name='activity']").each(
+                    function() {
+                        {% for i in ward_illness_for_decision %}
+                            if(this.getAttribute('value') == {{ i }}) {
+                                this.checked= true;
+                            }
+                        {% endfor %}
+                    });
+            {% endif %}
+        {% endblock %}
+    });
+</script>
+</body>
+</html>

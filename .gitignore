@@ -1,0 +1,8 @@
+*.pyc
+*.db
+*.pid
+*.swo
+*.swp
+__ pycache __
+.idea
+.vEnv 

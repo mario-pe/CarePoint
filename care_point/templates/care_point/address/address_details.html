@@ -1,0 +1,28 @@
+{% extends 'care_point/base.html' %}
+
+{% block body %}
+
+    <div class="col-ms-12 col-md-6">
+        <div class="container-fluid">
+             <div class="details-container">
+                <h3>Address</h3>
+                {% if address %}
+                    {{ address }}
+                {% else %}
+                    <h2>Nie ma adresu do wyświetlenia</h2>
+                {% endif %}
+                 <h3>Podopieczny</h3>
+                {% if ward %}
+                    {% for w in ward %}
+                        {{ w }}
+                    {% endfor %}
+                {% else %}
+                    <h2>Nie można wyswietlić podopoiecznego powiazanego z tym adresem</h2>
+                {% endif %}
+             </div>
+        </div>
+    </div>
+
+
+
+{% endblock %}

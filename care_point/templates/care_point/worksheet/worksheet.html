@@ -1,0 +1,41 @@
+{% extends 'care_point/base.html' %}
+
+{%  block body %}
+    {% if worksheet %}
+
+        <div class="cols-sm-12 col-md-6">
+            <div class="container-fluid">
+                <table class="table table-hover">
+                     <thead>
+                        <tr>
+                            <th>Karty pracy</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        {% for w in  worksheet %}
+                                <tr>
+                                    <td>
+                                        <div class="object_display">
+                                            <a href="{% url 'care_point:worksheet_details' w.id %}"> {{ w }} </a>
+                                            <a href="{% url 'care_point:worksheet_update' w.id %}"><button type="button"><span class="glyphicon glyphicon-edit"></span></button></a>
+                                            <a href="{% url 'care_point:worksheet_delete' w.id %}"><button type="button"><span class="glyphicon glyphicon-trash"></span></button></a>
+                                        </div>
+                                    </td>
+                                </tr>
+                        {% endfor %}
+                     </tbody>
+                </table>
+            </div>
+        </div>
+
+
+    {% else %}
+        <h3>Nie ma kart do wyswietlenia </h3>
+    {% endif %}
+
+     <div class="row">
+        <div class="container-fulid">
+                 <a href="{% url 'care_point:worksheet_add' %}" > <button class="btn btn-primary btn-md">Dodaj karte pracy</button> </a>
+        </div>
+     </div>
+{% endblock %}

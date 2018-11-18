@@ -1,0 +1,43 @@
+{% extends 'care_point/base.html' %}
+
+{%  block body %}
+     <div class="col-sm-6 col-md-2"">
+        <div class="conteiner-fluid">
+            <a href="{%  url 'care_point:point_add' %}"><button class="btn btn-primary btn-md">Dodaj nowy</button> </a>
+        </div>
+     </div>
+    {% if points %}
+
+            <div class="col-sm-12 col-md-6">
+                <div class="conteiner-fluid">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Punty opieki</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for p in points %}
+                                <tr>
+                                    <td>
+                                        <div class="object_display">
+                                            <li>
+                                                <a href="{% url 'care_point:point_details' p.id %}"> {{ p.city }}</a>
+                                                <a href="{% url 'care_point:point_update' p.id %}"><button type="button"><span class="glyphicon glyphicon-edit"></span></button></a>
+                                                <a href="{% url 'care_point:point_delete' p.id %}"><button type="button"><span class="glyphicon glyphicon-trash"></span></button></a>
+                                            </li>
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+    {% else %}
+        <h3>Nie ma oddziałów do wyswietlenia </h3>
+    {% endif %}
+
+
+{% endblock %}

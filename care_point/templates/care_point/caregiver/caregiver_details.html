@@ -1,0 +1,107 @@
+{% extends 'care_point/base.html' %}
+
+{% block body %}
+{#{% load mathfilters %}#}
+
+    <div class="col-ms-12 col-md-8">
+        <div class="container-fluid, details">
+             <nav class="navbar navbar-default, details" style="background-color: #CCCCCC">
+                <div class="conteiner-fluid, details" >
+                    <div>
+                        {% if caregiver %}
+                            <h2 style="padding: 1%">Dane opiekuna</h2>
+                            <div style="padding: 1%">
+                                <p style="font-size: large" >{{ caregiver.name }} {{ caregiver.sname }}</p>
+                            </div>
+                        {% else %}
+                    <h2>No caregiver to display</h2>
+                         {% endif %}
+                    </div>
+                </div>
+             </nav>
+
+            {%  if calendar %}
+                {{ calendar|safe }}
+            {% endif %}
+
+            {% if contract %}
+                <div class="col-sm-12 col-md-12">
+                    <div class="conteiner-fluid">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Umowy</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for c in contract %}
+                                    <tr>
+                                        <td>
+                                            <div class="object_display">
+                                                <li>
+                                                    <a href="{% url 'care_point:contract_details' c.id %}"> {{ c }} </a>
+                                                    <a href="{% url 'care_point:contract_update' c.id %}"><button type="button"><span class="glyphicon glyphicon-edit"></span></button></a>
+                                                    <a href="{% url 'care_point:contract_delete' c.id %}"><button type="button"><span class="glyphicon glyphicon-trash"></span></button></a>
+                                                </li>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            {% else %}
+                <div class="row">
+                    <h3>Nie ma umow do wyswietlenia </h3>
+                </div>
+            {% endif %}
+
+            {% if worksheet %}
+                <div class="col-sm-12 col-md-12">
+                    <div class="conteiner-fluid">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Karty pracy</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for w in worksheet %}
+                                    <tr>
+                                        <td>
+                                            <div class="object_display">
+                                                <li>
+                                                    <a href="{% url 'care_point:worksheet_details' w.id %}"> {{ w }} </a>
+                                                    <a href="{% url 'care_point:worksheet_update' w.id %}"><button type="button"><span class="glyphicon glyphicon-edit"></span></button></a>
+                                                    <a href="{% url 'care_point:worksheet_delete' w.id %}"><button type="button"><span class="glyphicon glyphicon-trash"></span></button></a>
+                                                </li>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            {% else %}
+                <h3>Nie ma kart pracy do wyswietlenia </h3>
+            {% endif %}
+
+
+             </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="container-fulid">
+            {% if caregiver %}
+                 <a href="{% url 'care_point:next_contract' caregiver.id %}" > <button class="btn btn-primary btn-md">Przedluz umowe</button> </a>
+{#                     TODO ogarnac metode dodawania z carevierem #}
+{#                 <a href="{% url 'care_point:worksheet_add' caregiver.id %}" > <button class="btn btn-primary btn-md">Dodaj karte pracy</button> </a>#}
+                 <a href="{% url 'care_point:worksheet_add' %}" > <button class="btn btn-primary btn-md">Dodaj karte pracy</button> </a>
+             {% endif %}
+        </div>
+    </div>
+
+{% endblock %}

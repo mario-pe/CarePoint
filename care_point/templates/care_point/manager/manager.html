@@ -1,0 +1,41 @@
+{% extends 'care_point/base.html' %}
+
+{%  block body %}
+        <div class="col-sm-6 col-md-2">
+            <div class="conteiner-fluid">
+                <a href="{%  url 'care_point:manager_add' %}"><button class="btn btn-primary btn-md">Dodaj nowe</button> </a>
+            </div>
+        </div>
+    {% if managers %}
+        <div class="col-sm-12 col-md-6">
+            <div class="conteiner-fluid">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Manadżerowie</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for m in managers %}
+                            <tr>
+                                <td>
+                                    <div class="object_display">
+                                        <li>
+                                            <a href="{% url 'care_point:manager_details' m.id %}"> {{ m.name }}, {{ m.sname }}, {{ m.point_of_care }} </a>
+                                            <a href="{% url 'care_point:manager_update' m.id %}"><button type="button"><span class="glyphicon glyphicon-edit"></span></button></a>
+                                            <a href="{% url 'care_point:manager_delete' m.id %}"><button type="button"><span class="glyphicon glyphicon-trash"></span></button></a>
+                                        </li>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    {% else %}
+        <h3>Nie ma manadżerów do wyswietlenia </h3>
+    {% endif %}
+
+
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends 'care_point/base.html' %}
+
+{% block body %}
+
+    <div class="col-ms-12 col-md-6">
+        <div class="container-fluid">
+             <div class="details-container">
+                {% if activity %}
+                    {{ activity.id }} {{ activity.name }} {{ activity.description }}
+                {% else %}
+                    <h2>No activity to display</h2>
+                {% endif %}
+             </div>
+        </div>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends 'care_point/base.html' %}
+
+{%  block body %}
+     <div class="col-sm-6 col-md-2"">
+        <div class="conteiner-fluid">
+            <a href="{%  url 'care_point:illness_add' %}"><button class="btn btn-primary btn-md">Dodaj nowe</button> </a>
+        </div>
+     </div>
+    {% if illness %}
+
+            <div class="col-sm-12 col-md-6">
+                <div class="conteiner-fluid">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Schorzenia</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for i in illness %}
+                                <tr>
+                                    <td>
+                                        <div class="object_display">
+                                            <li>
+                                                <a href="{% url 'care_point:illness_details' i.id %}"> {{ i.name }}, {{ i.description }}</a>
+                                                <a href="{% url 'care_point:illness_update' i.id %}"><button type="button"><span class="glyphicon glyphicon-edit"></span></button></a>
+                                                <a href="{% url 'care_point:illness_delete' i.id %}"><button type="button"><span class="glyphicon glyphicon-trash"></span></button></a>
+                                            </li>
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+    {% else %}
+        <h3>Nie ma schorzen do wyswietlenia </h3>
+    {% endif %}
+
+
+{% endblock %}

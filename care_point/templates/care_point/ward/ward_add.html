@@ -1,0 +1,75 @@
+{% extends 'care_point/base.html' %}
+
+{% block jquery %}
+    $("#id_ward").hide();
+    $('label[for="id_ward"]').hide()
+{% endblock %}
+
+{% block body %}
+
+{% if info %}
+    <div class="container">
+        <div class="alert alert-danger">
+            {{ info }}
+        </div>
+    </div>
+{% endif  %}
+
+<div class="row" >
+    <div class="col-md-offset-1 col-sm-10" style="padding: 1%">
+        <div class="col-sm-11 col-md-7">
+            <div class="panel panel-default">
+            <h3 style="padding: 1%">Dane podopiecznego</h3>
+                <form class="form-horizontal"  action="" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                        {% for field in form_ward %}
+                            <div class="col-sm-offset-1 col-sm-11">
+                                <div class="form-group">
+                                    <div class="col-sm-offset-2 col-sm-10">
+                                        <span class="text-danger small">{{ field.errors }}</span>
+                                    </div>
+                                    <label class="control-label col-sm-2" for="song_title">{{ field.label_tag }}</label>
+                                    <div class="col-sm-10">{{ field }}</div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                <h3 style="padding: 1%">Dane adresowe</h3>
+                <form class="form-horizontal"  action="" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                        {% for field in form_address %}
+                            <div class="col-sm-offset-1 col-sm-11">
+                                <div class="form-group">
+                                    <div class="col-sm-offset-2 col-sm-10">
+                                        <span class="text-danger small">{{ field.errors }}</span>
+                                    </div>
+                                    <label class="control-label col-sm-2" for="song_title">{{ field.label_tag }}</label>
+                                    <div class="col-sm-10">{{ field }}</div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                <h3 style="padding: 1%">Decyzja</h3>
+                        {% for field in form_decision %}
+                            <div class="col-sm-offset-1 col-sm-11">
+                                <div class="form-group">
+                                    <div class="col-sm-offset-2 col-sm-10">
+                                        <span class="text-danger small">{{ field.errors }}</span>
+                                    </div>
+                                    <label class="control-label col-sm-2" for="song_title">{{ field.label_tag }}</label>
+                                    <div class="col-sm-10">{{ field }}</div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                             <button type="submit" class="btn btn-success btn-sm">
+                                 <span class="glyphicon glyphicon-plus"></span>Dalej
+                             </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

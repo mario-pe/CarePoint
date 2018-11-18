@@ -1,0 +1,49 @@
+{% extends 'care_point/base.html' %}
+
+{% block body %}
+
+    <div class="row">
+        <div class="col-sm-12 col-md-7">
+            <div class="panel panel-default">
+                <form class="form-horizontal"  action="" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {% include 'care_point/form_template.html' %}
+
+{#ILLNESS FORM#}
+                    {% for field in illness_form %}
+                        <div class="col-sm-offset-1 col-sm-11">
+                            <div class="form-group">
+                                <div class="col-sm-offset-2 col-sm-10">
+                                    <span class="text-danger small">{{ field.errors }}</span>
+                                </div>
+                            <label class="control-label col-sm-2" for="song_title">{{ field.label_tag }}</label>
+                            <div class="col-sm-10">{{ field }}</div>
+                            </div>
+                        </div>
+                    {% endfor %}
+
+{#ACTIVITY FORM#}
+                    {% for field in activity_form %}
+                        <div class="col-sm-offset-1 col-sm-11">
+                            <div class="form-group">
+                                <div class="col-sm-offset-2 col-sm-10">
+                                    <span class="text-danger small">{{ field.errors }}</span>
+                                </div>
+                            <label class="control-label col-sm-2" for="song_title">{{ field.label_tag }}</label>
+                            <div class="col-sm-10">{{ field }}</div>
+                            </div>
+                        </div>
+                    {% endfor %}
+
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                             <button type="submit" class="btn btn-success btn-sm">
+                                 <span class="glyphicon glyphicon-plus"></span>Dalej
+                             </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}>
