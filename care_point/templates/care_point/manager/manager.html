@@ -3,7 +3,7 @@
 {%  block body %}
         <div class="col-sm-6 col-md-2">
             <div class="conteiner-fluid">
-                <a href="{%  url 'care_point:manager_add' %}"><button class="btn btn-primary btn-md">Dodaj nowe</button> </a>
+                <a href="{%  url 'account:manager_signup' %}"><button class="btn btn-primary btn-md">Dodaj nowe</button> </a>
             </div>
         </div>
     {% if managers %}
@@ -21,9 +21,9 @@
                                 <td>
                                     <div class="object_display">
                                         <li>
-                                            <a href="{% url 'care_point:manager_details' m.id %}"> {{ m.name }}, {{ m.sname }}, {{ m.point_of_care }} </a>
-                                            <a href="{% url 'care_point:manager_update' m.id %}"><button type="button"><span class="glyphicon glyphicon-edit"></span></button></a>
-                                            <a href="{% url 'care_point:manager_delete' m.id %}"><button type="button"><span class="glyphicon glyphicon-trash"></span></button></a>
+                                            <a href="{% url 'care_point:manager_details' m.user.id %}"> {{ m.user.first_name }}, {{ m.user.last_name }}, {{ m.point_of_care }} </a>
+                                            <a href="{% url 'care_point:manager_update' m.user.id %}"><button type="button"><span class="glyphicon glyphicon-edit"></span></button></a>
+                                            <a href="{% url 'care_point:manager_delete' m.user.id %}"><button type="button"><span class="glyphicon glyphicon-trash"></span></button></a>
                                         </li>
                                     </div>
                                 </td>

@@ -13,8 +13,8 @@ class Point_of_careAdmin(admin.ModelAdmin):
     list_display = ('city',)
 
 
-class ManagerAdmin(admin.ModelAdmin):
-    list_display = ('name', 'sname')
+# class ManagerAdmin(admin.ModelAdmin):
+#     list_display = ('name', 'sname')
 
 
 class CaregiverAdmin(admin.ModelAdmin):
@@ -47,7 +47,7 @@ class WorksheetAdmin(admin.ModelAdmin):
 
 admin.site.register(Contract, ContractAdmin)
 admin.site.register(Point_of_care, Point_of_careAdmin)
-admin.site.register(Manager, ManagerAdmin)
+# admin.site.register(Manager, ManagerAdmin)
 admin.site.register(Caregiver, CaregiverAdmin)
 admin.site.register(Address, AddressAdmin)
 admin.site.register(Ward, WardAdmin)

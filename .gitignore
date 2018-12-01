@@ -6,3 +6,8 @@
 __ pycache __
 .idea
 .vEnv 
+account/migrations/
+care_point/migrations/
+db.sqlite3
+env/
+care_point/migrations

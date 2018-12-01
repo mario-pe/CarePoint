@@ -68,7 +68,7 @@ urlpatterns = [
 
     #MANAGER
     url(r'^manager/$', managers, name='managers'),
-    url(r'^manager/add/$', manager_add, name='manager_add'),
+    # url(r'^manager/add/$', manager_add, name='manager_add'),
     url(r'^manager/(?P<manager_id>[0-9]+)/$', manager_details, name='manager_details'),
     url(r'^manager/(?P<manager_id>[0-9]+)/delete/$', manager_delete, name='manager_delete'),
     url(r'^manager/(?P<manager_id>[0-9]+)/update/$', manager_update, name='manager_update'),

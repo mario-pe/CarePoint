@@ -1,6 +1,12 @@
 from datetime import datetime
 from django.db import models
 
+# from account.models import User
+
+# class User(models.Model):
+#     is_manager = models.BooleanField(default=False)
+from account.models import User
+
 
 class Point_of_care(models.Model):
     city = models.CharField(max_length=30)
@@ -10,12 +16,11 @@ class Point_of_care(models.Model):
 
 
 class Manager(models.Model):
-    name = models.CharField(max_length=30)
-    sname = models.CharField(max_length=30)
-    point_of_care = models.ForeignKey(Point_of_care, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
+    point_of_care = models.ForeignKey(Point_of_care, on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):
-        return '{}, {}, {}'.format(self.name, self.sname, self.point_of_care)
+        return '{}, {}'.format(self.user, self.point_of_care)
 
 
 class Caregiver(models.Model):
@@ -127,7 +132,7 @@ class WardActivity(models.Model):
     decision = models.ForeignKey(Decision, blank=True, null=True, on_delete=models.CASCADE)
 
     def __str__(self):
-        return 'podopieczny {}, aktywność {}'.format(self.ward, self.activity)
+        return 'podopieczny {}, aktywnosc {}'.format(self.ward, self.activity)
 
 
 

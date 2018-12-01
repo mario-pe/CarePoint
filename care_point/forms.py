@@ -1,3 +1,5 @@
+from django.contrib.auth.forms import UserCreationForm
+from django.db import transaction
 from django.db.models import TextField
 
 from .models import *
@@ -15,8 +17,7 @@ class ContractForm(forms.ModelForm):
             'genre': 'Typ',
             'date_from': 'Data od',
             'date_to': 'Data do',
-            # 'caregiver': 'Opiekun',
-                }
+        }
 
 
 class Point_of_care_Form(forms.ModelForm):
@@ -31,17 +32,15 @@ class Point_of_care_Form(forms.ModelForm):
         }
 
 
-class ManagerForm(forms.ModelForm):
+class UpdateManagerForm(forms.ModelForm):
 
     class Meta:
         model = Manager
 
-        fields = ['name', 'sname', 'point_of_care']
+        fields = ['point_of_care']
 
         labels = {
-            'name': 'Imie',
-            'sname': 'Nazwisko',
-            'point_of_care': 'Odział',
+            'point_of_care': 'Odzial',
         }
 
 
@@ -55,7 +54,7 @@ class CaregiverForm(forms.ModelForm):
         labels = {
             'name': 'Imie',
             'sname': 'Nazwisko',
-            'point_of_care': 'Odział',
+            'point_of_care': 'Odzial',
         }
 
 
