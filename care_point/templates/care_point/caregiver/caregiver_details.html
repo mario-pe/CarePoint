@@ -11,7 +11,7 @@
                         {% if caregiver %}
                             <h2 style="padding: 1%">Dane opiekuna</h2>
                             <div style="padding: 1%">
-                                <p style="font-size: large" >{{ caregiver.name }} {{ caregiver.sname }}</p>
+                                <p style="font-size: large" >{{ caregiver.user.first_name }} {{ caregiver.user.last_sname }}</p>
                             </div>
                         {% else %}
                     <h2>No caregiver to display</h2>
@@ -92,16 +92,15 @@
              </div>
         </div>
     </div>
-
+{% if request.user.is_manager %}
     <div class="row">
         <div class="container-fulid">
             {% if caregiver %}
-                 <a href="{% url 'care_point:next_contract' caregiver.id %}" > <button class="btn btn-primary btn-md">Przedluz umowe</button> </a>
-{#                     TODO ogarnac metode dodawania z carevierem #}
-{#                 <a href="{% url 'care_point:worksheet_add' caregiver.id %}" > <button class="btn btn-primary btn-md">Dodaj karte pracy</button> </a>#}
+                 <a href="{% url 'care_point:next_contract' caregiver.user.id %}" > <button class="btn btn-primary btn-md">Przedluz umowe</button> </a>
                  <a href="{% url 'care_point:worksheet_add' %}" > <button class="btn btn-primary btn-md">Dodaj karte pracy</button> </a>
              {% endif %}
         </div>
     </div>
-
+{% endif %}
+{{ end }}
 {% endblock %}

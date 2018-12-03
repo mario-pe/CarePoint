@@ -14,8 +14,7 @@ def managers(request):
 @login_required
 def manager_details(request, manager_id):
     manager = get_object_or_404(Manager, pk=manager_id)
-    user = get_object_or_404(User, pk=manager_id)
-    return render(request, 'care_point/manager/manager_details.html', {'manager': manager, 'user': user})
+    return render(request, 'care_point/manager/manager_details.html', {'manager': manager})
 
 
 @login_required

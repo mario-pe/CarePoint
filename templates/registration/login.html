@@ -1,27 +1,36 @@
-{% extends 'base.html' %}
+{% extends 'care_point/base.html' %}
 
-
-{% block content %}
-  {% if form.non_field_errors %}
-    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-      {% for error in form.non_field_errors %}
-        <p{% if forloop.last %} class="mb-0"{% endif %}>{{ error }}</p>
-      {% endfor %}
-      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-  {% endif %}
-  <div class="row">
-    <div class="col-lg-4 col-md-6 col-sm-8 col-12">
-      <h2>Log in</h2>
-      <form method="post" novalidate>
-        {% csrf_token %}
-        <input type="hidden" name="next" value="{{ next }}">
-        {{ form.username }}
-        {{ form.password}}
-        <button type="submit" class="btn btn-primary">Log in</button>
-      </form>
-    </div>
-  </div>
+{% block body %}
+<h3><p> Loginowanie </p></h3>
+    {% if info %}
+        <div class="container">
+            <div class="alert alert-danger">
+                {{ info }}
+            </div>
+        </div>
+    {% endif  %}
+        {% if form.errors %}
+            <p>
+                logowanie nie powiodlo sie
+            </p>
+        {% else %}
+            <p>wypelnij ponizszy formularz </p>
+        {% endif %}
+        <div class="row">
+            <div class="col-sm-12 col-md-7">
+                <div class="panel panel-default">
+                    <form class="form-horizontal"  method="post">
+                        {{ form.as_p }}
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                 <button type="submit" class="btn btn-success btn-sm">
+                                     <span class="glyphicon glyphicon-plus"></span>Zapisz
+                                 </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
 {% endblock %}

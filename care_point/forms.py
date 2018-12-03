@@ -49,11 +49,9 @@ class CaregiverForm(forms.ModelForm):
     class Meta:
         model = Caregiver
 
-        fields = ['name', 'sname', 'point_of_care']
+        fields = ['point_of_care']
 
         labels = {
-            'name': 'Imie',
-            'sname': 'Nazwisko',
             'point_of_care': 'Odzial',
         }
 

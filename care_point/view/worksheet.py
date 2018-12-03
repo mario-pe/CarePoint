@@ -1,11 +1,13 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 
+from account.decorators import manager_required
 from care_point.forms import WorksheetForm
 from care_point.models import Worksheet, Ward, Address, Decision, Caregiver
 from care_point.utils import check_available, worksheet_form_with_content, _prepare_duties_for_decisoin
 
 
+@manager_required
 @login_required
 def worksheet(request):
     worksheet = Worksheet.objects.all()
@@ -18,13 +20,10 @@ def worksheet_add(request):
         form = WorksheetForm(data=request.POST)
         if form.is_valid():
             new = form.save(commit=False)
-
             caregiver_worksheet_at_date = Worksheet.objects.filter(caregiver=new.caregiver).filter(date=new.date)
             ward_worksheet_at_date = Worksheet.objects.filter(ward=new.ward).filter(date=new.date)
-
             is_caregiver_free = check_available(caregiver_worksheet_at_date, new)
             is_ward_free = check_available(ward_worksheet_at_date, new)
-
             if is_caregiver_free and is_ward_free:
                 new.save()
                 return redirect('care_point:worksheet')

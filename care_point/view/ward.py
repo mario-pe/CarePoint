@@ -3,8 +3,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 
 from care_point.forms import WardForm, DecisionForm, AddressForm, WorksheetForm, IllnessForm
 from care_point.models import Ward
-from care_point.utils import _update_or_create_duties, _prepare_illness_from_wrad_activity_for_decision, \
-    _prepare_duties_for_decisoin, _prepare_duties_for_ward
+from care_point.utils import _update_or_create_duties, _prepare_duties_for_ward
 
 
 @login_required

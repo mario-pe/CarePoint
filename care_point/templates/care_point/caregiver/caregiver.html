@@ -11,14 +11,14 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {% for c in caregivers %}
+                        {% for caregiver in caregivers %}
                             <tr>
                                 <td>
                                     <div class="object_display">
                                         <li>
-                                            <a href="{% url 'care_point:caregiver_details' c.id %}"> {{ c.name }} {{ c.sname }}</a>
-                                            <a href="{% url 'care_point:caregiver_update' c.id %}"><button type="button"><span class="glyphicon glyphicon-edit"></span></button></a>
-                                            <a href="{% url 'care_point:caregiver_delete' c.id %}"><button type="button"><span class="glyphicon glyphicon-trash"></span></button></a>
+                                            <a href="{% url 'care_point:caregiver_details' caregiver.user.id %}"> {{ caregiver.user.first_name }} {{ caregiver.user.last_name }}</a>
+                                            <a href="{% url 'care_point:caregiver_update' caregiver.user.id %}"><button type="button"><span class="glyphicon glyphicon-edit"></span></button></a>
+                                            <a href="{% url 'care_point:caregiver_delete' caregiver.user.id %}"><button type="button"><span class="glyphicon glyphicon-trash"></span></button></a>
                                         </li>
                                     </div>
                                 </td>

@@ -21,7 +21,7 @@ urlpatterns = [
 
     #OPIEKINOWIE
     url(r'^caregiver/$', caregiver, name='caregiver'),
-    url(r'^caregiver/add/$', caregiver_add, name='caregiver_add'),
+    url(r'^caregiver/schedule/$', caregiver_schedule, name='caregiver_schedule'),
     url(r'^caregiver/(?P<caregiver_id>[0-9]+)/$', caregiver_details, name='caregiver_details'),
     url(r'^caregiver/(?P<caregiver_id>[0-9]+)/delete/$', caregiver_delete, name='caregiver_delete'),
     url(r'^caregiver/(?P<caregiver_id>[0-9]+)/update/$', caregiver_update, name='caregiver_update'),

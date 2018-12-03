@@ -18,7 +18,7 @@ class Point_of_careAdmin(admin.ModelAdmin):
 
 
 class CaregiverAdmin(admin.ModelAdmin):
-    list_display = ('name', 'sname', 'point_of_care')
+    list_display = ('user', 'point_of_care')
 
 
 class AddressAdmin(admin.ModelAdmin):

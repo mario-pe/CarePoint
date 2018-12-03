@@ -6,7 +6,7 @@
         <div class="container-fluid">
              <div class="details-container">
                 {% if manager %}
-                    {{ user.id }} {{ user.first_name }} {{ user.last_name }} {{ manager.point_of_care }}
+                    {{ manager.user.id }} {{ manager.user.first_name }} {{ manager.user.last_name }} {{ manager.point_of_care }}
                 {% else %}
                     <h2>Nie ma manadżera do wyświetlenia</h2>
                 {% endif %}

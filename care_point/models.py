@@ -1,11 +1,6 @@
+from account.models import User
 from datetime import datetime
 from django.db import models
-
-# from account.models import User
-
-# class User(models.Model):
-#     is_manager = models.BooleanField(default=False)
-from account.models import User
 
 
 class Point_of_care(models.Model):
@@ -24,12 +19,11 @@ class Manager(models.Model):
 
 
 class Caregiver(models.Model):
-    name = models.CharField(max_length=30)
-    sname = models.CharField(max_length=30)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
     point_of_care = models.ForeignKey(Point_of_care, on_delete=models.CASCADE)
 
     def __str__(self):
-        return '{}, {}, {}'.format(self.name, self.sname, self.point_of_care)
+        return '{}, {}'.format(self.user, self.point_of_care)
 
 
 class Contract(models.Model):

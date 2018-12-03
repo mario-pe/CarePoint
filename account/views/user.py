@@ -1,4 +1,4 @@
-from django.shortcuts import redirect
+from django.shortcuts import render, redirect
 
 from account.models import User
 from account.forms import ManagerSignUpForm
