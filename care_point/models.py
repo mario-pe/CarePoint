@@ -83,7 +83,7 @@ class Decision(models.Model):
     hours = models.CharField(max_length=4)
     charge = models.CharField(max_length=30)
     ward = models.ForeignKey(Ward, blank=True, null=True, on_delete=models.CASCADE)
-    illness = models.ManyToManyField(Illness, blank=True)
+    illness = models.ManyToManyField(Illness,  blank=True)
     activity = models.ManyToManyField(Activity, blank=True)
 
     def __str__(self):

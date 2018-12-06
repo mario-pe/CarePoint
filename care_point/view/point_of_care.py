@@ -11,7 +11,6 @@ def points(request):
     return render(request, 'care_point/point_of_care/point_of_care.html', {'points': points})
 
 
-@login_required
 def point_add(request):
     if request.method == 'POST':
         form = Point_of_care_Form(data=request.POST)

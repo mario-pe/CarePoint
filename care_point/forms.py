@@ -2,6 +2,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.db import transaction
 from django.db.models import TextField
 
+from care_point.utils import _update_or_create_duties
 from .models import *
 from django import forms
 
@@ -56,7 +57,7 @@ class CaregiverForm(forms.ModelForm):
         }
 
 
-class AddressForm(forms.ModelForm):
+class AddressFormWard(forms.ModelForm):
 
     class Meta:
         model = Address
@@ -72,7 +73,35 @@ class AddressForm(forms.ModelForm):
         }
 
 
+class AddressForm(forms.ModelForm):
+
+    class Meta:
+        model = Address
+
+        fields = ['city', 'street', 'number', 'zip_code']
+
+        labels = {
+            'city': 'Miasto',
+            'street': 'Ulica',
+            'number': 'Numer domu',
+            'zip_code': 'Kod pocztowy',
+        }
+
+
 class WardForm(forms.ModelForm):
+
+    city = forms.CharField(label='Miasto')
+    street = forms.CharField(label='Ulica')
+    home_number = forms.CharField(label='Numer domu')
+    zip_code = forms.CharField(label='Miasto')
+
+    percent_payment = forms.CharField(label='Doplata z MOPS w procentach')
+    hours = forms.CharField(label='Przyslugujace godziny')
+    charge = forms.CharField(label='Stawka godzinowa')
+
+    illness = forms.ModelMultipleChoiceField(queryset=Illness.objects.all(), widget=forms.CheckboxSelectMultiple(),
+                                             label='Choroby')
+    activity = forms.ModelMultipleChoiceField(queryset=Activity.objects.all(), widget=forms.CheckboxSelectMultiple(), label='Aktywności')
 
     class Meta:
         model = Ward
@@ -86,8 +115,26 @@ class WardForm(forms.ModelForm):
             'address': 'Adres',
         }
 
+    def save(self, commit=True):
+        ward = super().save(commit=False)
+        if commit:
+            ward.save()
+        city = self.cleaned_data.get('city')
+        street = self.cleaned_data.get('street')
+        home_number = self.cleaned_data.get('home_number')
+        zip_code = self.cleaned_data.get('zip_code')
 
-class DecisionForm(forms.ModelForm):
+        percent_payment = self.cleaned_data.get('percent_payment')
+        hours = self.cleaned_data.get('hours')
+        charge = self.cleaned_data.get('charge')
+        illnesses = self.cleaned_data['illness']
+        activites = self.cleaned_data['activity']
+        Address.objects.create(city=city, street=street, number=home_number, zip_code=zip_code, ward=ward)
+        decision = Decision.objects.create(percent_payment=percent_payment, hours=hours, ward=ward, charge=charge)
+        _update_or_create_duties(decision, illnesses, activites)
+
+
+class DecisionFormWard(forms.ModelForm):
 
     class Meta:
         model = Decision
@@ -99,6 +146,20 @@ class DecisionForm(forms.ModelForm):
             'hours': 'Przyslugujace godziny',
             'charge': 'Stawka godzinowa',
             'ward': 'Podopieczny',
+        }
+
+
+class DecisionForm(forms.ModelForm):
+
+    class Meta:
+        model = Decision
+
+        fields = ['percent_payment', 'hours', 'charge']
+
+        labels = {
+            'percent_payment': 'Doplata z MOPS w procentach',
+            'hours': 'Przyslugujace godziny',
+            'charge': 'Stawka godzinowa',
         }
 
 
@@ -120,11 +181,6 @@ class IllnessFormCheckboxes(forms.Form):
     illness = forms.ModelMultipleChoiceField(queryset=Illness.objects.all(), widget=forms.CheckboxSelectMultiple(), label='Choroby')
 
 
-class IllnessFormCheckboxesForUpdate(forms.Form):
-
-    illness = forms.ModelMultipleChoiceField(queryset=Illness.objects.all(), widget=forms.CheckboxSelectMultiple(), label='Choroby')
-
-
 class ActivityForm(forms.ModelForm):
 
     class Meta:
@@ -140,7 +196,7 @@ class ActivityForm(forms.ModelForm):
 
 class ActivityFormCheckboxes(forms.Form):
 
-    activity = forms.ModelMultipleChoiceField(queryset=Activity.objects.all(), widget=forms.CheckboxSelectMultiple())
+    activity = forms.ModelMultipleChoiceField(queryset=Activity.objects.all(), widget=forms.CheckboxSelectMultiple(), label='Aktywności')
 
 
 class WorksheetForm(forms.ModelForm):

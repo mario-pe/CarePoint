@@ -1,7 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 
-from care_point.forms import AddressForm, Ward
+from care_point.forms import AddressFormWard, Ward
 from care_point.models import Address
 
 
@@ -14,7 +14,7 @@ def address(request):
 @login_required
 def address_add(request):
     if request.method == 'POST':
-        form = AddressForm(data=request.POST)
+        form = AddressFormWard(data=request.POST)
         if form.is_valid():
             new = form.save(commit=False)
             new.save()
@@ -22,7 +22,7 @@ def address_add(request):
         # return render(request, 'care_point/ward/address_add.html', {'ward_id': ward_id})
         return redirect('care_point:address')
     else:
-        form = AddressForm()
+        form = AddressFormWard()
         return render(request, 'care_point/address/address_add.html', {'form': form})
 
 
@@ -37,7 +37,7 @@ def address_details(request, address_id):
 def address_update(request, address_id):
 
     a = get_object_or_404(Address, pk=address_id)
-    form = AddressForm(data=request.POST or None, instance=a)
+    form = AddressFormWard(data=request.POST or None, instance=a)
     if request.method == 'POST':
         if form.is_valid():
             new = form.save(commit=False)

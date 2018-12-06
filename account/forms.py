@@ -21,7 +21,7 @@ class ManagerSignUpForm(UserCreationForm):
     point_of_care = forms.ModelChoiceField(
         queryset=Point_of_care.objects.all(),
         required=True,
-        label='Odział',
+        label='Odział'
     )
 
     class Meta(UserCreationForm.Meta):

@@ -1,7 +1,7 @@
 import datetime as idt
 
-from care_point.forms import WorksheetForm
-from care_point.models import WardIllness, Illness, Activity, WardActivity
+# from care_point.forms import WorksheetForm
+from care_point.models import WardIllness, WardActivity
 
 
 def check_available(worksheets, new_worksheet):
@@ -27,17 +27,17 @@ def check_available(worksheets, new_worksheet):
 
 
 def worksheet_form_with_content(data):
-    form = WorksheetForm({
-        'caregiver': data.caregiver,
-        'ward': data.ward,
-        'decision': data.decision,
-        'genre': data.genre,
-        'date': data.date,
-        'hour_from': data.hour_from,
-        'hour_to': data.hour_to,
-        'description': data.description})
-    return form
-
+#     form = WorksheetForm({
+#         'caregiver': data.caregiver,
+#         'ward': data.ward,
+#         'decision': data.decision,
+#         'genre': data.genre,
+#         'date': data.date,
+#         'hour_from': data.hour_from,
+#         'hour_to': data.hour_to,
+#         'description': data.description})
+#     return form
+    return 'a'
 
 # def _processing_duties(decision, new_illnesses, new_activites, old_illnesses=None, old_activity=None):
 def _update_or_create_duties(decision, new_illnesses, new_activites, old_illnesses=None, old_activity=None):
