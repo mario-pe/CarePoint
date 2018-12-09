@@ -79,17 +79,7 @@ def decision_delete(request, decision_id):
     return redirect('care_point:decision')
 
 
-@login_required
-def next_decision(request, ward_id):
-    if request.method == 'POST':
-        form = DecisionFormWard(data=request.POST)
-        if form.is_valid():
-            new = form.save(commit=False)
-            new.save()
-        return redirect('care_point:ward')
-    else:
-        form = DecisionFormWard()
-        return render(request, 'care_point/decision/decision_add.html', {'form': form})
+
 
 
 def _generate_duties_ids(duties):

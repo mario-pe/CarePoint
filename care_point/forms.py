@@ -78,7 +78,7 @@ class AddressForm(forms.ModelForm):
     class Meta:
         model = Address
 
-        fields = ['city', 'street', 'number', 'zip_code']
+        fields = ['city', 'street', 'number', 'zip_code', 'ward']
 
         labels = {
             'city': 'Miasto',
@@ -132,6 +132,20 @@ class WardForm(forms.ModelForm):
         Address.objects.create(city=city, street=street, number=home_number, zip_code=zip_code, ward=ward)
         decision = Decision.objects.create(percent_payment=percent_payment, hours=hours, ward=ward, charge=charge)
         _update_or_create_duties(decision, illnesses, activites)
+
+
+class WardUpdateForm(forms.ModelForm):
+
+    class Meta:
+        model = Ward
+
+        fields = ['name', 'sname', 'pesel']
+
+        labels = {
+            'name': 'Imie',
+            'sname': 'Nazwisko',
+            'pesel': 'PESEL',
+        }
 
 
 class DecisionFormWard(forms.ModelForm):

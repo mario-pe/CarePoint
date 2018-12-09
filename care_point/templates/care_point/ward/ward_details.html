@@ -118,15 +118,16 @@
 
              </div>
         </div>
-    </div>
-
     <div class="row">
         <div class="container-fulid">
             {% if ward %}
-                 <a href="{% url 'care_point:next_decision' ward.id %}" > <button class="btn btn-primary btn-md">Dodaj decyzje</button> </a>
-                 <a href="{% url 'care_point:new_worksheet_ward' ward.id %}" > <button class="btn btn-primary btn-md">Dodaj karte pracy</button> </a>
-             {% endif %}
+                <a href="{% url 'care_point:next_decision' ward.id %}" > <button class="btn btn-primary btn-md">Dodaj decyzje</button> </a>
+                <a href="{% url 'care_point:new_worksheet_ward' ward.id %}" > <button class="btn btn-primary btn-md">Dodaj karte pracy</button> </a>
+                <a href="{% url 'care_point:ward_update' ward.id %}"><button class="btn btn-primary btn-md">Edycja</button></a>
+            {% endif %}
         </div>
     </div>
+    </div>
+
 
 {% endblock %}

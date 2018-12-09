@@ -57,6 +57,7 @@ urlpatterns = [
     url(r'^ward/(?P<ward_id>[0-9]+)/$', ward_details, name='ward_details'),
     url(r'^ward/(?P<ward_id>[0-9]+)/delete/$', ward_delete, name='ward_delete'),
     url(r'^ward/(?P<ward_id>[0-9]+)/update/$', ward_update, name='ward_update'),
+    url(r'^ward/(?P<ward_id>[0-9]+)/add_address/$', add_address_for_ward, name='add_address_for_ward'),
 
     # #DECYZJE
     url(r'^decision/$', decision, name='decision'),
@@ -73,7 +74,7 @@ urlpatterns = [
     url(r'^manager/(?P<manager_id>[0-9]+)/delete/$', manager_delete, name='manager_delete'),
     url(r'^manager/(?P<manager_id>[0-9]+)/update/$', manager_update, name='manager_update'),
 
-    # #ADDRESS
+    #ADDRESS
     url(r'^address/$', address, name='address'),
     url(r'^address/add/$', address_add, name='address_add'),
     url(r'^address/(?P<address_id>[0-9]+)/$', address_details, name='address_details'),
