@@ -61,54 +61,72 @@
                      <li class="dropdown">
                         <a href="#" class="dropdown-togle" data-toggle="dropdown"> Inne <span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="{% url 'care_point:decision_add' %}">Decyzje</a></li>
-                            <li><a href="{% url 'care_point:decision_add' %}">Odzialy</a></li>
-                            <li><a href="{% url 'care_point:decision_add' %}">Manager</a></li>
                             <li><a href="{% url 'care_point:illness' %}">Schorzenia</a></li>
                             <li><a href="{% url 'care_point:activity' %}">Aktywnosci</a></li>
                             <li><a href="{% url 'care_point:address' %}">Adresy</a></li>
+                            <li><a href="{% url 'care_point:points' %}">Oddziały</a></li>
+                            <li><a href="{% url 'care_point:managers' %}">Menadżer</a></li>
                         </ul>
                     </li>
 
 
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                  <li><a href="#">Log out  </a></li>
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#popUpWindow">Login</button>
+                        <a href="{% url 'account:logout' %}"  class="btn btn-info" role="button">Logout</a>
 
                 </ul>
             </div>
         </div>
      </nav>
-{#<div class="modal fade" id="popUpWindow">#}
-{#    <div class="modal-dialog">#}
-{#        <div class="modal-content">#}
-{#            <div class="modal-header">#}
-{#                <button type="button" class="close" data-dismiss="modal">&times</button>#}
-{#                 <h2 class="model-title"> Log In</h2>#}
-{#            </div>#}
-{#            <div class="modal-body">#}
-{#                <form role="form">#}
-{#                    <div class="form-group">#}
-{#                        <input type="text" class="form-control" placeholder="Login">#}
-{#                    </div>#}
-{#                    <div class="form-group">#}
-{#                        <input type="password" class="form-control" placeholder="Password">#}
-{#                    </div>#}
-{#                </form>#}
-{#            </div>#}
-{#            <div class="modal-footer">#}
-{#                <button class="btn btn-primary btn-block">Log In</button>#}
-{#            </div>#}
-{#        </div>#}
-{#    </div>#}
-{#</div>#}
+<div class="modal fade" id="popUpWindow">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times</button>
+                 <h2 class="model-title"> Log In</h2>
+            </div>
+            <div class="modal-body">
+                <form role="form">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Login">
+                    </div>
+                    <div class="form-group">
+                        <input type="password" class="form-control" placeholder="Password">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary btn-block">Log In</button>
+            </div>
+        </div>
+    </div>
+</div>
+     <p>{{ ward_illness_for_decision }}</p>
 {%  block body %}
 {% endblock %}
-<script>
+ <script>
     $(document).ready(function(){
         {% block jquery %}
-
+            {% if ward_illness_for_decision %}
+                $("input[name='illness']").each(
+                    function() {
+                        {% for i in ward_illness_for_decision %}
+                            if(this.getAttribute('value') == {{ i }}) {
+                                this.checked= true;
+                            }
+                        {% endfor %}
+                    });
+            {% endif %}
+            {% if ward_activity_for_decision %}
+                $("input[name='activity']").each(
+                    function() {
+                        {% for i in ward_illness_for_decision %}
+                            if(this.getAttribute('value') == {{ i }}) {
+                                this.checked= true;
+                            }
+                        {% endfor %}
+                    });
+            {% endif %}
         {% endblock %}
     });
 </script>
