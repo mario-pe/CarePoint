@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'care_point.apps.CarePointConfig',
-    'account',
+    'account.apps.AccountConfig',
 ]
 
 MIDDLEWARE = [
