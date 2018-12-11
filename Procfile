@@ -1,0 +1,1 @@
+web: gunicorn PCK_SBD.wsgi
