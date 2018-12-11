@@ -13,8 +13,8 @@ class Point_of_careAdmin(admin.ModelAdmin):
     list_display = ('city',)
 
 
-# class ManagerAdmin(admin.ModelAdmin):
-#     list_display = ('name', 'sname')
+class ManagerAdmin(admin.ModelAdmin):
+    list_display = ('user', 'sname')
 
 
 class CaregiverAdmin(admin.ModelAdmin):
