@@ -79,9 +79,6 @@ def decision_delete(request, decision_id):
     return redirect('care_point:decision')
 
 
-
-
-
 def _generate_duties_ids(duties):
     ids =[]
     for d in duties:
