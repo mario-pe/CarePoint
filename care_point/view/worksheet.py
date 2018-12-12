@@ -3,8 +3,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 
 from account.decorators import manager_required
 from care_point.forms import WorksheetForm
-from care_point.models import Worksheet, Ward, Address, Decision, Caregiver
-from care_point.utils import check_available, worksheet_form_with_content, _prepare_duties_for_decisoin
+from care_point.models import Worksheet, Decision
+from care_point.utils import check_available, _prepare_duties_for_decisoin
 
 
 @manager_required
@@ -29,11 +29,11 @@ def worksheet_add(request):
                 return redirect('care_point:worksheet')
             elif not is_caregiver_free:
                 info = "W godzinach " + new.hour_from.__str__() + " - " + new.hour_to.__str__() + " pracownik " + new.caregiver.__str__() + " wykonuje inne obowiazki"
-                form = worksheet_form_with_content(new)
+                form = WorksheetForm(data=request.POST, instance=worksheet)
                 return render(request, 'care_point/worksheet/worksheet_add.html', {'form': form, "info": info})
             elif not is_ward_free:
                 info = "W godzinach " + new.hour_from.__str__() + " - " + new.hour_to.__str__() + " podopieczny " + new.ward.__str__() + " ma inna wizyte"
-                form = worksheet_form_with_content(new)
+                form = WorksheetForm(data=request.POST, instance=worksheet)
                 return render(request, 'care_point/worksheet/worksheet_add.html', {'form': form, "info": info})
     else:
         form = WorksheetForm()
