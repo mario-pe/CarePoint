@@ -30,7 +30,7 @@ DEBUG = config('DEBUG', default=False, cast=bool)
 
 # ALLOWED_HOSTS = []
 ALLOWED_HOSTS = ['bial-pck2.herokuapp.com']
-
+#
 
 # Application definition
 
