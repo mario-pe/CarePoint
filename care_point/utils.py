@@ -1,6 +1,5 @@
 import datetime as idt
 
-# from care_point.forms import WorksheetForm
 from care_point.models import WardIllness, WardActivity
 
 
@@ -24,20 +23,6 @@ def check_available(worksheets, new_worksheet):
             else:
                 is_free = False
     return is_free
-
-
-def worksheet_form_with_content(data):
-#     form = WorksheetForm({
-#         'caregiver': data.caregiver,
-#         'ward': data.ward,
-#         'decision': data.decision,
-#         'genre': data.genre,
-#         'date': data.date,
-#         'hour_from': data.hour_from,
-#         'hour_to': data.hour_to,
-#         'description': data.description})
-#     return form
-    return 'a'
 
 # def _processing_duties(decision, new_illnesses, new_activites, old_illnesses=None, old_activity=None):
 def _update_or_create_duties(decision, new_illnesses, new_activites, old_illnesses=None, old_activity=None):
@@ -115,3 +100,4 @@ def _prepare_activity_from_wrad_activity_for_ward(ward):
         activities.append(ward_activity.activity)
     activities = set(activities)
     return activities
+
