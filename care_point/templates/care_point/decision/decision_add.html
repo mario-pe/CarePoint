@@ -6,7 +6,7 @@
             <div class="panel panel-default">
                 <form class="form-horizontal"  action="" method="post" enctype="multipart/form-data">
                     {% csrf_token %}
-                    {% include 'care_point/form_template.html' %}
+                    {% include 'form_template.html' %}
 
 {#ILLNESS FORM#}
                     {% for field in illness_form %}
