@@ -1,6 +1,13 @@
 {% extends 'base.html' %}
 
 {% block body %}
+    {% if info %}
+        <div class="container">
+            <div class="alert alert-danger">
+                {{ info }}
+            </div>
+        </div>
+    {% endif  %}
 
     <div class="row">
         <div class="col-sm-12 col-md-7">

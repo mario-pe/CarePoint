@@ -1,28 +1,5 @@
-import datetime as idt
-
 from care_point.models import WardIllness, WardActivity
 
-
-def check_available(worksheets, new_worksheet):
-    new_time_from = idt.datetime.combine(idt.date(1, 1, 1), new_worksheet.hour_from)
-    new_time_to = idt.datetime.combine(idt.date(1, 1, 1), new_worksheet.hour_to)
-    compare_time = idt.timedelta(0, 0, 0)
-    is_free = True
-    if len(worksheets) > 0:
-        for i in worksheets:
-            i_time_from = idt.datetime.combine(idt.date(1, 1, 1), i.hour_from)
-            i_time_to = idt.datetime.combine(idt.date(1, 1, 1), i.hour_to)
-            if i_time_from - new_time_from < compare_time:
-                if i_time_to - new_time_from > compare_time or i_time_to - new_time_to > compare_time:
-                    is_free = False
-            elif i_time_from - new_time_from > compare_time:
-                if i_time_from - new_time_to < compare_time or i_time_to - new_time_to < compare_time:
-                    is_free = False
-            elif new_time_from - new_time_to >= compare_time:
-                is_free = False
-            else:
-                is_free = False
-    return is_free
 
 # def _processing_duties(decision, new_illnesses, new_activites, old_illnesses=None, old_activity=None):
 def _update_or_create_duties(decision, new_illnesses, new_activites, old_illnesses=None, old_activity=None):
