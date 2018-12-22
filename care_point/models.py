@@ -1,3 +1,4 @@
+
 from account.models import User
 from datetime import datetime
 from django.db import models
@@ -79,10 +80,10 @@ class Activity(models.Model):
 
 
 class Decision(models.Model):
-    percent_payment = models.CharField(max_length=5)
-    hours = models.CharField(max_length=4)
-    charge = models.CharField(max_length=30)
-    ward = models.ForeignKey(Ward, blank=True, null=True, on_delete=models.CASCADE)
+    percent_payment = models.DecimalField(max_length=6, max_digits=6, decimal_places=2)
+    hours = models.DecimalField(max_length=6, max_digits=6, decimal_places=2)
+    charge = models.DecimalField(max_length=6, max_digits=6, decimal_places=2)
+    ward = models.ForeignKey(Ward, on_delete=models.CASCADE, )
     illness = models.ManyToManyField(Illness,  blank=True)
     activity = models.ManyToManyField(Activity, blank=True)
 

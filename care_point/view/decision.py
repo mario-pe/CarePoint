@@ -25,7 +25,12 @@ def decision_add(request):
             illnesses = illness_form.cleaned_data['illness']
             activities = activity_form.cleaned_data['activity']
             _update_or_create_duties(decision=new_decision, new_illnesses=illnesses, new_activites=activities)
-        return redirect('care_point:decision')
+            return redirect('care_point:decision')
+        else:
+            return render(request, 'care_point/decision/decision_add.html', {'form': decision_form,
+                                                                             'illness_form': illness_form,
+                                                                             'activity_form': activity_form})
+
     else:
         decision_form = DecisionFormWard()
         illness_form = IllnessFormCheckboxes()
