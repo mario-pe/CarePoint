@@ -1,10 +1,12 @@
 from django.contrib.auth.forms import UserCreationForm
 from django.db import transaction
 from django.db.models import TextField
+from django.utils.translation import ugettext_lazy as _
 
 from care_point.utils import _update_or_create_duties
 from .models import *
 from django import forms
+import datetime as dt
 
 
 class ContractForm(forms.ModelForm):
@@ -19,6 +21,15 @@ class ContractForm(forms.ModelForm):
             'date_from': 'Data od',
             'date_to': 'Data do',
         }
+
+    def clean_date_to(self, *args, **kwargs):
+        date_to = self.cleaned_data.get('date_to')
+        date_from = self.cleaned_data.get('date_from')
+        compare_time = dt.timedelta(0, 0, 0)
+        if date_from - date_to < compare_time:
+            return date_to
+        raise forms.ValidationError('Niepoprawne daty')
+
 
 
 class Point_of_care_Form(forms.ModelForm):
@@ -161,7 +172,35 @@ class DecisionFormWard(forms.ModelForm):
             'charge': 'Stawka godzinowa',
             'ward': 'Podopieczny',
         }
+        error_messages = {
+            'percent_payment': {
+                'required': 'To pole jest wymagane',
+                'max_digits': 'Podaj poprawną wartość',
+                'max_decimal_places': 'Podaj poprawną wartość',
+                'max_whole_digits': 'Podaj poprawną wartość'
+            },
+            'hours': {
+                'required': 'To pole jest wymagane',
+                'max_digits': 'Podaj poprawną wartość',
+                'max_decimal_places': 'Podaj poprawną wartość',
+                'max_whole_digits': 'Podaj poprawną wartość'
+            },
+            'charge': {
+                'required': 'To pole jest wymagane',
+                'max_digits': 'Podaj poprawną wartość',
+                'max_decimal_places': 'Podaj poprawną wartość',
+                'max_whole_digits': 'Podaj poprawną wartość'
+            },
+            'ward': {
+                'required': 'To pole jest wymagane'
+            }
+        }
 
+    def clean_percent_payment(self):
+        percent_payment = self.cleaned_data.get('percent_payment')
+        if percent_payment <= 100 and percent_payment > 0:
+            return percent_payment
+        raise forms.ValidationError('Podaj poprawną wartość')
 
 class DecisionForm(forms.ModelForm):
 

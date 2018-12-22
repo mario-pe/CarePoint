@@ -1,6 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
-import datetime as idt
+import datetime as dt
 
 from account.decorators import manager_required
 from care_point.forms import WorksheetForm
@@ -34,6 +34,7 @@ def worksheet_details(request, worksheet_id):
     illnesses, activities = _prepare_duties_for_decisoin(decision)
     return render(request, 'care_point/worksheet/worksheet_details.html', {'worksheet': worksheet,
                                                                            'illnesses': illnesses,
+                                                                           'decision': decision,
                                                                            'activities': activities})
 
 
@@ -79,14 +80,14 @@ def create_worksheet(request, new_worksheet, path):
 
 
 def check_available(worksheets, new_worksheet):
-    new_worksheet_time_from = idt.datetime.combine(idt.date(1, 1, 1), new_worksheet.hour_from)
-    new_worksheet_time_to = idt.datetime.combine(idt.date(1, 1, 1), new_worksheet.hour_to)
-    compare_time = idt.timedelta(0, 0, 0)
+    new_worksheet_time_from = dt.datetime.combine(dt.date(1, 1, 1), new_worksheet.hour_from)
+    new_worksheet_time_to = dt.datetime.combine(dt.date(1, 1, 1), new_worksheet.hour_to)
+    compare_time = dt.timedelta(0, 0, 0)
     is_free = True
     if len(worksheets) > 0:
         for i in worksheets:
-            worksheet_time_from = idt.datetime.combine(idt.date(1, 1, 1), i.hour_from)
-            worksheet_time_to = idt.datetime.combine(idt.date(1, 1, 1), i.hour_to)
+            worksheet_time_from = dt.datetime.combine(dt.date(1, 1, 1), i.hour_from)
+            worksheet_time_to = dt.datetime.combine(dt.date(1, 1, 1), i.hour_to)
             if worksheet_time_from - new_worksheet_time_from < compare_time:
                 if worksheet_time_to - new_worksheet_time_from > compare_time or worksheet_time_to - new_worksheet_time_to > compare_time:
                     is_free = False
@@ -105,9 +106,9 @@ def get_caregiver_and_ward_worksheets_for_date(worksheet):
 
 
 def is_new_worksheet_time_valid(new_worksheet):
-    new_time_from = idt.datetime.combine(idt.date(1, 1, 1), new_worksheet.hour_from)
-    new_time_to = idt.datetime.combine(idt.date(1, 1, 1), new_worksheet.hour_to)
-    compare_time = idt.timedelta(0, 0, 0)
+    new_time_from = dt.datetime.combine(dt.date(1, 1, 1), new_worksheet.hour_from)
+    new_time_to = dt.datetime.combine(dt.date(1, 1, 1), new_worksheet.hour_to)
+    compare_time = dt.timedelta(0, 0, 0)
     if new_time_from - new_time_to < compare_time:
         return True
     return False

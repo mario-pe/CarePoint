@@ -73,7 +73,8 @@ def next_contract(request, caregiver_id):
             caregiver = get_object_or_404(Caregiver, pk=caregiver_id)
             new.save()
             caregiver.contract_set.add(new)
-        return redirect('care_point:caregiver')
+            return redirect('care_point:caregiver_details', caregiver_id=caregiver_id)
+        return render(request, 'care_point/contract/contract_add.html', {'form': form})
     else:
         form = ContractForm()
         return render(request, 'care_point/contract/contract_add.html', {'form': form})
