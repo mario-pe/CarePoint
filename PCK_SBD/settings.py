@@ -28,8 +28,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = config('SECRET_KEY')
 DEBUG = config('DEBUG', default=False, cast=bool)
 
-# ALLOWED_HOSTS = []
-ALLOWED_HOSTS = ['bial-pck2.herokuapp.com']
+ALLOWED_HOSTS = []
+# ALLOWED_HOSTS = ['bial-care_point_v2.herokuapp.com']
 
 
 # Application definition
@@ -108,6 +108,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
+# sprwdzic code jezyka polskiego
 
 TIME_ZONE = 'UTC'
 

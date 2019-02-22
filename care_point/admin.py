@@ -14,7 +14,7 @@ class Point_of_careAdmin(admin.ModelAdmin):
 
 
 class ManagerAdmin(admin.ModelAdmin):
-    list_display = ('user', 'point_of_care')
+    list_display = ('user', 'point_of_care')    
 
 
 class CaregiverAdmin(admin.ModelAdmin):
@@ -26,7 +26,7 @@ class AddressAdmin(admin.ModelAdmin):
 
 
 class WardAdmin(admin.ModelAdmin):
-    list_display = ('name', 'sname', 'pesel')
+    list_display = ('first_name', 'last_name', 'pesel')
 
 
 class DecisionAdmin(admin.ModelAdmin):

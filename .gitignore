@@ -8,3 +8,4 @@ __ pycache __
 .vEnv 
 db.sqlite3
 env/
+.coverage

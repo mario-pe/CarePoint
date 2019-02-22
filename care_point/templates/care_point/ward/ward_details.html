@@ -1,6 +1,20 @@
 {% extends 'base.html' %}
 
 {% block body %}
+    {% if alert_info %}
+        <div class="container">
+            <div class="alert alert-danger">
+                {{ info }}
+            </div>
+        </div>
+    {% endif  %}
+    {% if success_info %}
+        <div class="container">
+            <div class="alert alert-success ">
+                {{ success_info }}
+            </div>
+        </div>
+    {% endif  %}
 
     <div class="col-ms-12 col-md-8" xmlns="http://www.w3.org/1999/html">
         <div class="container-fluid">
@@ -10,7 +24,7 @@
                         {% if ward %}
                             <h2 style="padding: 1%">Dane podopiecznego</h2>
                             <div style="padding: 1%">
-                                <p style="font-size: large" >{{ ward.name }} {{ ward.sname }}</p>
+                                <p style="font-size: large" >{{ ward.first_name }} {{ ward.last_name }}</p>
                             </div>
                         {% else %}
                             <p>Brak dnaych podopieczneg</p>
@@ -26,6 +40,10 @@
                     </div>
                 </div>
              </nav>
+            {%  if calendar %}
+                {{ calendar|safe }}
+            {% endif %}
+
         <table>
             <tbody>
                 <tr>

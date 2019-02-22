@@ -106,9 +106,9 @@ class WardForm(forms.ModelForm):
     home_number = forms.CharField(label='Numer domu')
     zip_code = forms.CharField(label='Miasto')
 
-    percent_payment = forms.CharField(label='Doplata z MOPS w procentach')
-    hours = forms.CharField(label='Przyslugujace godziny')
-    charge = forms.CharField(label='Stawka godzinowa')
+    percent_payment = forms.DecimalField(label='Doplata z MOPS w procentach', max_digits=6, decimal_places=2)
+    hours = forms.DecimalField(label='Przyslugujace godziny', max_digits=6, decimal_places=2)
+    charge = forms.DecimalField(label='Stawka godzinowa', max_digits=6, decimal_places=2)
 
     illness = forms.ModelMultipleChoiceField(queryset=Illness.objects.all(), widget=forms.CheckboxSelectMultiple(),
                                              label='Choroby')
@@ -117,11 +117,11 @@ class WardForm(forms.ModelForm):
     class Meta:
         model = Ward
 
-        fields = ['name', 'sname', 'pesel']
+        fields = ['first_name', 'last_name', 'pesel']
 
         labels = {
-            'name': 'Imie',
-            'sname': 'Nazwisko',
+            'first_name': 'Imie',
+            'last_name': 'Nazwisko',
             'pesel': 'PESEL',
             'address': 'Adres',
         }
@@ -144,17 +144,41 @@ class WardForm(forms.ModelForm):
         decision = Decision.objects.create(percent_payment=percent_payment, hours=hours, ward=ward, charge=charge)
         _update_or_create_duties(decision, illnesses, activites)
 
+    error_messages = {
+        'percent_payment': {
+            'required': 'To pole jest wymagane',
+            'max_digits': 'Podaj poprawną wartość',
+            'max_decimal_places': 'Podaj poprawną wartość',
+            'max_whole_digits': 'Podaj poprawną wartość'
+        },
+        'hours': {
+            'required': 'To pole jest wymagane',
+            'max_digits': 'Podaj poprawną wartość',
+            'max_decimal_places': 'Podaj poprawną wartość',
+            'max_whole_digits': 'Podaj poprawną wartość'
+        },
+        'charge': {
+            'required': 'To pole jest wymagane',
+            'max_digits': 'Podaj poprawną wartość',
+            'max_decimal_places': 'Podaj poprawną wartość',
+            'max_whole_digits': 'Podaj poprawną wartość'
+        },
+        'ward': {
+            'required': 'To pole jest wymagane'
+        }
+    }
+
 
 class WardUpdateForm(forms.ModelForm):
 
     class Meta:
         model = Ward
 
-        fields = ['name', 'sname', 'pesel']
+        fields = ['first_name', 'last_name', 'pesel']
 
         labels = {
-            'name': 'Imie',
-            'sname': 'Nazwisko',
+            'first_name': 'Imie',
+            'last_name': 'Nazwisko',
             'pesel': 'PESEL',
         }
 
@@ -254,6 +278,9 @@ class ActivityFormCheckboxes(forms.Form):
 
 class WorksheetForm(forms.ModelForm):
 
+    quantity = forms.IntegerField(min_value=1, max_value=100, initial=1, label='Ilość wizyt', required=False)
+    interval = forms.IntegerField(min_value=0, max_value=7, initial=1, label='Co ile dni wyzyta', required=False)
+
     class Meta:
         model = Worksheet
 
@@ -269,4 +296,5 @@ class WorksheetForm(forms.ModelForm):
             'date': 'Data',
             'hour_from': 'Godzina od',
             'hour_to': 'Godzina do',
+            'description': 'Uwagi'
         }

@@ -1,17 +1,18 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 
+from account.decorators import manager_required
 from care_point.forms import ActivityForm
 from care_point.models import Activity
 
 
-@login_required
+@manager_required
 def activity(request):
     activity = Activity.objects.all()
     return render(request, 'care_point/activity/activity.html', {'activity': activity})
 
 
-@login_required
+@manager_required
 def activity_add(request):
     if request.method == 'POST':
         form = ActivityForm(data=request.POST)
@@ -24,13 +25,13 @@ def activity_add(request):
         return render(request, 'care_point/activity/activity_add.html', {'form': form})
 
 
-@login_required
+@manager_required
 def activity_details(request, activity_id):
     activity = get_object_or_404(Activity, pk=activity_id)
     return render(request, 'care_point/activity/activity_details.html', {'activity': activity})
 
 
-@login_required
+@manager_required
 def activity_update(request, activity_id):
 
     a = get_object_or_404(Activity, pk=activity_id)
@@ -43,7 +44,8 @@ def activity_update(request, activity_id):
     return render(request, 'care_point/activity/activity_update.html', {'form': form})
 
 
-@login_required
+
+@manager_required
 def activity_delete(request, activity_id):
     activity = get_object_or_404(Activity, pk=activity_id)
     activity.delete()

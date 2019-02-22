@@ -24,7 +24,7 @@ class Caregiver(models.Model):
     point_of_care = models.ForeignKey(Point_of_care, on_delete=models.CASCADE)
 
     def __str__(self):
-        return '{}, {}'.format(self.user, self.point_of_care)
+        return '{}, {}'.format(self.user.first_name, self.user.last_name)
 
 
 class Contract(models.Model):
@@ -44,12 +44,12 @@ class Contract(models.Model):
 
 
 class Ward(models.Model):
-    name = models.CharField(max_length=30)
-    sname = models.CharField(max_length=30)
-    pesel = models.CharField(max_length=15)
+    first_name = models.CharField(max_length=30)
+    last_name = models.CharField(max_length=30)
+    pesel = models.DecimalField(max_length=15, max_digits=15, decimal_places=0)
 
     def __str__(self):
-        return '{}, {}'.format(self.name, self.sname)
+        return '{}, {},'.format(self.first_name, self.last_name)
 
 
 class Address(models.Model):

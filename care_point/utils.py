@@ -1,7 +1,6 @@
-from care_point.models import WardIllness, WardActivity
+from care_point.models import WardIllness, WardActivity, Worksheet
 
 
-# def _processing_duties(decision, new_illnesses, new_activites, old_illnesses=None, old_activity=None):
 def _update_or_create_duties(decision, new_illnesses, new_activites, old_illnesses=None, old_activity=None):
     if not old_illnesses and not old_activity:
         old_illnesses, old_activity = _prepare_duties_for_decisoin(decision)
@@ -55,13 +54,13 @@ def _prepare_activity_from_wrad_activity_for_decision(decison):
     return activities
 
 
-def _prepare_duties_for_ward(ward):
-    illnesses = _prepare_illness_from_wrad_activity_for_ward(ward)
-    activities = _prepare_activity_from_wrad_activity_for_ward(ward)
+def prepare_duties_for_ward(ward):
+    illnesses = __prepare_illness_from_wrad_activity_for_ward(ward)
+    activities = __prepare_activity_from_wrad_activity_for_ward(ward)
     return illnesses, activities
 
 
-def _prepare_illness_from_wrad_activity_for_ward(ward):
+def __prepare_illness_from_wrad_activity_for_ward(ward):
     ward_illness_for_decision = WardIllness.objects.filter(ward=ward).select_related().all()
     illnesses = []
     for ward_illness in ward_illness_for_decision:
@@ -70,7 +69,7 @@ def _prepare_illness_from_wrad_activity_for_ward(ward):
     return illnesses
 
 
-def _prepare_activity_from_wrad_activity_for_ward(ward):
+def __prepare_activity_from_wrad_activity_for_ward(ward):
     ward_activity_for_decision = WardActivity.objects.filter(ward=ward).select_related().all()
     activities = []
     for ward_activity in ward_activity_for_decision:
@@ -78,3 +77,37 @@ def _prepare_activity_from_wrad_activity_for_ward(ward):
     activities = set(activities)
     return activities
 
+
+def prepare_calender(worksheets, month, object):
+    iterator = 1
+    calendar = '<div class="col-sm-12 col-md-12"><div class="conteiner-fluid">'
+    calendar += '<table id="calendar"><tbody>'
+    for i in range(0, 5):
+        if iterator % 7 == 1:
+            calendar += '<tr class="calendar_tr">'
+        for j in range(0, 7):
+            for w in worksheets:
+                if w.date.month == month:
+                    if w.date.day == iterator:
+                        if iterator % 7 == 1:
+                            calendar += '<tr class="calendar_tr">'
+                        calendar += '<td class="calendar_td">' + iterator.__str__() + '<br>'
+                        for w_for_day in worksheets:
+                            if w_for_day.date.day == iterator:
+                                calendar += '<a href="' + '/care_point/worksheet/'+ w_for_day.id.__str__() + '/'  '"> '
+                                if object is 'ward':
+                                    calendar += w_for_day.caregiver.__str__() +'</a><br>'
+                                else:
+                                    calendar += w_for_day.ward.__str__() + '</a><br>'
+                        iterator += 1
+                        calendar += '</td>'
+                        if iterator % 7 == 1:
+                            calendar += '</tr>'
+            else:
+                if iterator < 32:
+                    calendar += '<td class="calendar_td">' +iterator.__str__() + '<br></td>'
+                    iterator += 1
+            if iterator % 7 == 1:
+                calendar += '</tr>'
+    calendar += '</tbody></table></div></div>'
+    return calendar

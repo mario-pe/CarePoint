@@ -5,6 +5,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm
 from django.db import transaction
 from django.forms import DateField
+from django.utils.translation import ugettext_lazy as _
 
 from care_point.models import Manager, Point_of_care, Caregiver, Contract
 
@@ -25,7 +26,7 @@ class ManagerSignUpForm(UserCreationForm):
     )
 
     class Meta(UserCreationForm.Meta):
-        fields = ('first_name', 'last_name', 'username',)
+        fields = ('username', 'first_name', 'last_name')
         model = User
         labels = {
             'username': 'Login',
@@ -41,6 +42,12 @@ class ManagerSignUpForm(UserCreationForm):
         point_of_care = self.cleaned_data.get('point_of_care')
         Manager.objects.create(user=user, point_of_care=point_of_care)
         return user
+
+    error_messages = {
+            'unique': "Uzytkownik o takim loginie istnieje.",
+            'password_mismatch': "Hasła muszą być identyczne.",
+    }
+
 
 
 class CaregiverSignUpForm(UserCreationForm): # poszerzyc formularz o pola potrzebne do utworzenia obiektów powiazanych z caregiver
@@ -60,13 +67,13 @@ class CaregiverSignUpForm(UserCreationForm): # poszerzyc formularz o pola potrze
         required=True,
         label='Umowa',
     )
-    contract_start_date = DateField(initial=datetime.date.today, label='Poczatek umowy')
-    contract_end_date = DateField(initial=datetime.date.today() + datetime.timedelta(days=1), label='Koniec umowy')
+    contract_start_date = DateField(initial=datetime.date.today, required=True, label='Poczatek umowy')
+    contract_end_date = DateField(initial=datetime.date.today() + datetime.timedelta(days=1), required=True, label='Koniec umowy')
 
     class Meta:
         model = User
 
-        fields = ['username', 'first_name', 'last_name',]
+        fields = ['username', 'first_name', 'last_name']
 
         labels = {
             'username': 'Login',
@@ -86,6 +93,11 @@ class CaregiverSignUpForm(UserCreationForm): # poszerzyc formularz o pola potrze
         caregiver = Caregiver.objects.create(user=user, point_of_care=point_of_care)
         Contract.objects.create(genre=contract_type, date_from=contract_start_date, date_to=contract_end_date, caregiver=caregiver)
         return user
+
+    error_messages = {
+            'unique': "Uzytkownik o takim loginie istnieje.",
+            'password_mismatch': "Hasła muszą być identyczne.",
+    }
 
 
 class UpdateUserForm(forms.ModelForm):

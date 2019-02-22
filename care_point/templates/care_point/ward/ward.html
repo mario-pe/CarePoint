@@ -16,7 +16,7 @@
                                 <tr>
                                     <td>
                                         <div class="object_display">
-                                            <a href="{% url 'care_point:ward_details' w.id %}"> {{ w.name }} {{ w.sname }}</a>
+                                            <a href="{% url 'care_point:ward_details' w.id %}"> {{ w.first_name }} {{ w.last_name }}</a>
                                             <a href="{% url 'care_point:ward_update' w.id %}"><button type="button"><span class="glyphicon glyphicon-edit"></span></button></a>
                                             <a href="{% url 'care_point:ward_delete' w.id %}"><button type="button"><span class="glyphicon glyphicon-trash"></span></button></a>
                                         </div>

@@ -1,20 +1,22 @@
-from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 
+from account.decorators import manager_required
 from care_point.forms import AddressFormWard, Ward
 from care_point.models import Address
 
 
-@login_required
+@manager_required
 def address(request):
     address = Address.objects.all()
     return render(request, 'care_point/address/address.html', {'address': address})
 
 
-@login_required
+@manager_required
 def address_add(request):
     if request.method == 'POST':
         form = AddressFormWard(data=request.POST)
+        # import pdb
+        # pdb.set_trace()
         if form.is_valid():
             new = form.save(commit=False)
             new.save()
@@ -26,14 +28,14 @@ def address_add(request):
         return render(request, 'care_point/address/address_add.html', {'form': form})
 
 
-@login_required
+@manager_required
 def address_details(request, address_id):
     address = get_object_or_404(Address, pk=address_id)
     ward = Ward.objects.filter(address=address).all
     return render(request, 'care_point/address/address_details.html', {'address': address, 'ward': ward})
 
 
-@login_required
+@manager_required
 def address_update(request, address_id):
 
     a = get_object_or_404(Address, pk=address_id)
@@ -46,7 +48,7 @@ def address_update(request, address_id):
     return render(request, 'care_point/address/address_update.html', {'form': form})
 
 
-@login_required
+@manager_required
 def address_delete(request, address_id):
     address = get_object_or_404(Address, pk=address_id)
     address.delete()

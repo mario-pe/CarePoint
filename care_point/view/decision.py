@@ -1,18 +1,19 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 
+from account.decorators import manager_required
 from care_point.forms import DecisionFormWard, IllnessFormCheckboxes, ActivityFormCheckboxes
 from care_point.models import Decision, WardIllness, WardActivity, Illness
 from care_point.utils import _update_or_create_duties, _prepare_duties_for_decisoin
 
 
-@login_required
+@manager_required
 def decision(request):
     decision = Decision.objects.all().order_by('id').reverse()
     return render(request, 'care_point/decision/decision.html', {'decision': decision})
 
 
-@login_required
+@manager_required
 def decision_add(request):
     if request.method == 'POST':
         decision_form = DecisionFormWard(data=request.POST)
@@ -40,7 +41,7 @@ def decision_add(request):
                                                                          'activity_form': activity_form})
 
 
-@login_required
+@manager_required
 def decision_details(request, decision_id):
     decision = get_object_or_404(Decision, pk=decision_id)
     illnesses, activities = _prepare_duties_for_decisoin(decision)
@@ -49,7 +50,7 @@ def decision_details(request, decision_id):
                                                                          'activity': activities, })
 
 
-@login_required
+@manager_required
 def decision_update(request, decision_id):
     decision = get_object_or_404(Decision, pk=decision_id)  # wyciagnac dane
     ward_illness_for_decision, ward_activity_for_decision = _prepare_duties_for_decisoin(decision=decision)
@@ -77,7 +78,7 @@ def decision_update(request, decision_id):
                                                                             })
 
 
-@login_required
+@manager_required
 def decision_delete(request, decision_id):
     decision = get_object_or_404(Decision, pk=decision_id)
     decision.delete()
